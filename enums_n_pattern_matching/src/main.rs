@@ -17,6 +17,7 @@ enum UsStates {
     // -- continued... 
 }
 
+#[derive(Debug)]
 enum Coin {
     Penny,
     Nickel,
@@ -24,10 +25,10 @@ enum Coin {
     Quarter(UsStates), // Quarters can be made with different states, so we use and enum of UsStates
 }
 
-enum MyOption<T> { // The standard librarary makes Option<T> available by default so to avoid an
-    None, // error I need to rename this Option<T> so there are no naming conflicts.
-    Some(T),
-}
+// enum MyOption<T> { // The standard librarary makes Option<T> available by default so to avoid an
+//     None, // error I need to rename this Option<T> so there are no naming conflicts.
+//     Some(T),
+// }
 
 fn value_in_cents(coin: Coin) -> u8 {
     match coin { // The match expression checkd the incoming value against the possible enums.
@@ -56,6 +57,8 @@ fn main() {
     route(home);
     
     let coin = Coin::Penny;
+    let _nickel = Coin::Nickel;
+    let _quarter = Coin::Quarter;
     let value = value_in_cents(coin);
     println!("The value of the coin is {}", value);
 
@@ -77,8 +80,25 @@ fn main() {
     }
     fn add_fancy_hat() {}
     fn remove_fancy_hat() {}
-    fn move_player(num_spaces: u8) {}
-    fn reroll() {}
+    fn _move_player(_num_spaces: u8) {}
+    fn _reroll() {}
+    
+    // Uting 'if let' is a way to avoid the boiler plate '_ => ()' syntax. 
+    // The bullow code id functionally the same.
+    // let mut count = 0;
+    // match coin {
+    //     Coin::Quarter(state) => println!("State quarter from {:?}!", state),
+    //     _ => count += 1,
+    // }
+    let new_coin = Coin::Dime;
+    let mut count = 0;
+    if let Coin::Quarter(state) = new_coin {
+        println!("State quarter from {:?}!", state);
+    } else {
+        count += 1;
+    }
+
+    println!("The count value is: {}", count);
 }
 
 fn route (ip: IpAddrKind) {
