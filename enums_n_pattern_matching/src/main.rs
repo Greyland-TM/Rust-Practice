@@ -24,8 +24,8 @@ enum Coin {
     Quarter(UsStates), // Quarters can be made with different states, so we use and enum of UsStates
 }
 
-enum Option<T> {
-    None,
+enum MyOption<T> { // The standard librarary makes Option<T> available by default so to avoid an
+    None, // error I need to rename this Option<T> so there are no naming conflicts.
     Some(T),
 }
 
@@ -41,9 +41,9 @@ fn value_in_cents(coin: Coin) -> u8 {
     }
 }
 
-fn plus_one(x: Option<i32>) -> i32 {
+fn plus_one(x: Option<i32>) -> Option<i32> {
     match x {
-        None => None,
+        None => None, // match must cover all variations or it will not compile.
         Some(i) => Some(i + 1),
     }
 }
@@ -52,16 +52,33 @@ fn main() {
     let _four = IpAddrKind::V4;
     let home = IpAddrKind::V4(127, 0, 0, 1);
     let _loopback = IpAddrKind::V6(String::from("test"));
-
+    
     route(home);
     
     let coin = Coin::Penny;
     let value = value_in_cents(coin);
     println!("The value of the coin is {}", value);
-    
+
+    // let number: i32 = 5;
     let anything = Some(5);
     let anything_plus_one = plus_one(anything);
-    println!("{}", anything_plus_one)
+    println!("{:?}", anything_plus_one);
+    let none = plus_one(None);
+    println!("{:?}", none);
+
+    let dice_roll = 9;
+    match dice_roll {
+        9 => add_fancy_hat(),
+        7 => remove_fancy_hat(),
+        // other => move_player(other) // Other is the default catchall and will use the value
+        // passed
+        // _ => reroll() // The _ character is similar to other but the value is not used. 
+        _ => () // This simply means do nothing for other values.
+    }
+    fn add_fancy_hat() {}
+    fn remove_fancy_hat() {}
+    fn move_player(num_spaces: u8) {}
+    fn reroll() {}
 }
 
 fn route (ip: IpAddrKind) {
