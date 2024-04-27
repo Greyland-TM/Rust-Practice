@@ -1,0 +1,1 @@
+/home/greyland/Development/rust_practice/restruant/target/debug/librestruant.rlib: /home/greyland/Development/rust_practice/restruant/src/front_of_house/hosting.rs /home/greyland/Development/rust_practice/restruant/src/front_of_house.rs /home/greyland/Development/rust_practice/restruant/src/lib.rs
